@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FASHION TRIVIA</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- HOME PAGE -->
+  <div id="home-page" class="page active">
+    <div class="home-container">
+      <h1 class="title">FASHION<br>TRIVIA</h1>
+      <button id="start-btn" class="btn-primary">LET'S PLAY</button>
+    </div>
+  </div>
+
+  <!-- NAME INPUT PAGE -->
+  <div id="name-page" class="page">
+    <div class="name-container">
+      <h2>ENTER YOUR NAME</h2>
+      <input type="text" id="player-name" placeholder="YOUR NAME" maxlength="20"/>
+      <button id="name-submit-btn" class="btn-primary">START GAME</button>
+    </div>
+  </div>
+
+  <!-- GAME PAGE -->
+  <div id="game-page" class="page">
+    <div class="game-header">
+      <span id="display-name" class="player-name-display"></span>
+      <span id="score-display" class="score-display">SCORE: 0</span>
+      <button id="done-btn" class="btn-done">DONE</button>
+    </div>
+    <div class="game-body">
+      <p id="question-counter" class="question-counter"></p>
+      <div class="image-wrapper">
+        <img id="runway-image" src="" alt="Runway Look" />
+      </div>
+      <p class="question-text">WHO DESIGNED THIS LOOK?</p>
+      <div id="choices-container" class="choices-container"></div>
+      <p id="feedback" class="feedback"></p>
+      <button id="next-btn" class="btn-secondary hidden">NEXT</button>
+    </div>
+  </div>
+
+  <!-- SCORE PAGE -->
+  <div id="score-page" class="page">
+    <div class="score-container">
+      <h2 id="score-name"></h2>
+      <p id="final-score"></p>
+      <button id="home-btn" class="btn-primary">RETURN TO HOME</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

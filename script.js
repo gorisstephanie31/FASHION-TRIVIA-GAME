@@ -1,4 +1,6 @@
-// ── REAL DATA FROM YOUR CSV ──
+// ============================================================
+// FASHION DATA — YOUR REAL VOGUE ARCHIVE DATA
+// ============================================================
 const fashionData = [
   ["Acne Studios","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68de2c71745926abcfd85a97/master/w_1600%2Cc_limit/00004-acne-studios-spring-2026-ready-to-wear-credit-gorunway.jpg"],
   ["Acne Studios","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68de2c709a0dcf1d5a5e1a22/master/w_1600%2Cc_limit/00003-acne-studios-spring-2026-ready-to-wear-credit-gorunway.jpg"],
@@ -14,16 +16,12 @@ const fashionData = [
   ["Ahluwalia","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68cebeed65c0f92c6d7f9399/master/w_1600%2Cc_limit/00016-ahluwalia-spring-2026-ready-to-wear-details-credit-gorunway.jpg"],
   ["Alainpaul","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68dd0b4cc6f0f3245f7a908f/master/w_1600%2Cc_limit/00019-alainpaul-spring-2026-ready-to-wear-credit-gorunway.jpg"],
   ["Alainpaul","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68dd0b4a9355c7f879019dcf/master/w_1600%2Cc_limit/00018-alainpaul-spring-2026-ready-to-wear-credit-gorunway.jpg"],
-  ["Alainpaul","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68dd0b481d6f657afa674987/master/w_1600%2Cc_limit/00016-alainpaul-spring-2026-ready-to-wear-credit-gorunway.jpg"],
   ["Alberta Ferretti","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68d2dd43ee5fa9833d60c470/master/w_1600%2Cc_limit/00049-alberta-ferretti-spring-2026-ready-to-wear-credit-brand.jpg"],
   ["Alberta Ferretti","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68d2dd42edb5b809bc7a4862/master/w_1600%2Cc_limit/00048-alberta-ferretti-spring-2026-ready-to-wear-credit-brand.jpg"],
-  ["Alberta Ferretti","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68d2dd418b279f892983e746/master/w_1600%2Cc_limit/00047-alberta-ferretti-spring-2026-ready-to-wear-credit-brand.jpg"],
   ["Aletta","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68cc364d2b73630373f22599/master/w_1600%2Cc_limit/00021-aletta-2026-ready-to-wear-credit-brand.jpg"],
   ["Aletta","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68cc364c7dba1befa44af7d6/master/w_1600%2Cc_limit/00019-aletta-2026-ready-to-wear-credit-brand.jpg"],
-  ["Aletta","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68cc364a258aef3387c51582/master/w_1600%2Cc_limit/00018-aletta-2026-ready-to-wear-credit-brand.jpg"],
   ["Alexander Wang","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68c5179797d17487ff53bef3/master/w_1600%2Cc_limit/00037-alexander-wang-spring-2026-ready-to-wear-credit-gorunway.jpg"],
   ["Alexander Wang","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68c51795d8f10b525d2915bb/master/w_1600%2Cc_limit/00036-alexander-wang-spring-2026-ready-to-wear-credit-gorunway.jpg"],
-  ["Alexander Wang","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68c51794cdc179a2a14db2cf/master/w_1600%2Cc_limit/00034-alexander-wang-spring-2026-ready-to-wear-credit-gorunway.jpg"],
   ["Alice + Olivia","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68c5ef4e998775dbcc544510/master/w_1600%2Cc_limit/00030-alice-and-olivia-spring-2026-ready-to-wear-credit-amanda-pratt-brand.jpg"],
   ["Alice + Olivia","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68c5ef4d566178fdcde604d1/master/w_1600%2Cc_limit/00029-alice-and-olivia-spring-2026-ready-to-wear-credit-amanda-pratt-brand.jpg"],
   ["Altuzarra","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68c5d37b8b51e5d21e082967/master/w_1600%2Cc_limit/00033-altuzarra-spring-2026-ready-to-wear-credit-gorunway.jpg"],
@@ -31,18 +29,13 @@ const fashionData = [
   ["Antonio Marras","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68d4070eca96f39fe9b67062/master/w_1600%2Cc_limit/00012-antonio-marras-spring-2026-ready-to-wear-credit-gorunway.jpg"],
   ["Antonio Marras","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68d4070efac80c2cdf187fcc/master/w_1600%2Cc_limit/00011-antonio-marras-spring-2026-ready-to-wear-credit-gorunway.jpg"],
   ["Armarium","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68d55907348b7dbc78554803/master/w_1600%2Cc_limit/00003-armarium-spring-2026-ready-to-wear-credit-brand.jpg"],
-  ["Armarium","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68d55907829c37d9e3424042/master/w_1600%2Cc_limit/00001-armarium-spring-2026-ready-to-wear-credit-brand.jpg"],
   ["Arthur Arbesser","Fall 2025 Ready-to-Wear","https://assets.vogue.com/photos/68d5017301aaeadeb88add2b/master/w_1600%2Cc_limit/00016-arthur-arbesser-fall-2025-ready-to-wear-credit-henrik-blomqvist.jpg"],
   ["Arthur Arbesser","Fall 2025 Ready-to-Wear","https://assets.vogue.com/photos/68d50170b5b242af43397aed/master/w_1600%2Cc_limit/00015-arthur-arbesser-fall-2025-ready-to-wear-credit-henrik-blomqvist.jpg"],
   ["Ashlyn","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68c48f76dad1e17d1bb5a0f1/master/w_1600%2Cc_limit/00022-ashlyn-spring-2026-ready-to-wear-credit-gorunway.jpg"],
-  ["Ashlyn","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68c48f60fe839688832edcbe/master/w_1600%2Cc_limit/00017-ashlyn-spring-2026-ready-to-wear-credit-gorunway.jpg"],
-  ["Avenir","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68da432657c93d360d2094c6/master/w_1600%2Cc_limit/00001-avenir-spring-2026-ready-to-wear-credit-brand.jpg"],
   ["Bach Mai","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68c771a1defbfcb5da77ae1d/master/w_1600%2Cc_limit/00013-bach-mai-spring-2026-ready-to-wear-credit-gorunway.jpg"],
   ["Bach Mai","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68c771a1a50a4df2e7cd561a/master/w_1600%2Cc_limit/00011-bach-mai-spring-2026-ready-to-wear-credit-gorunway.jpg"],
-  ["Bach Mai","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68c7719ca50a4df2e7cd5618/master/w_1600%2Cc_limit/00010-bach-mai-spring-2026-ready-to-wear-credit-gorunway.jpg"],
   ["Balmain","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68dd8cbf19421425e217e067/master/w_1600%2Cc_limit/00048-balmain-spring-2026-ready-to-wear-credit-gorunway.jpg"],
   ["Balmain","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68dd8cc01bda0d3e80cbd5c9/master/w_1600%2Cc_limit/00047-balmain-spring-2026-ready-to-wear-credit-gorunway.jpg"],
-  ["Balmain","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68dd8cb6a6c75e399dc22277/master/w_1600%2Cc_limit/00046-balmain-spring-2026-ready-to-wear-credit-gorunway.jpg"],
   ["Baro Lucas","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68cdaba9552445d2bc4abbcb/master/w_1600%2Cc_limit/00008-baro-lucas-spring-2026-ready-to-wear-credit-brand.JPG"],
   ["Baro Lucas","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68cdaba832da360e0afb17c6/master/w_1600%2Cc_limit/00007-baro-lucas-spring-2026-ready-to-wear-credit-brand.JPG"],
   ["Boss","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68d538ef4a1d3cd775f25255/master/w_1600%2Cc_limit/00041-boss-spring-2026-ready-to-wear-credit-gorunway.jpg"],
@@ -63,12 +56,11 @@ const fashionData = [
   ["Charlie Constantinou","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68d1629441e8d89d5d491e37/master/w_1600%2Cc_limit/00019-charlie-constantinou-spring-2026-ready-to-wear-credit-gorunway.jpg"],
   ["Chopova Lowena","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68cdb247ef009418f67b1cb0/master/w_1600%2Cc_limit/00001-chopova-lowena-spring-2026-ready-to-wear-credit-gorunway.jpg"],
   ["Christian Cowan","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68c61d36cdfe1255e454ef9e/master/w_1600%2Cc_limit/00011-christian-cowan-spring-2026-ready-to-wear-credit-gorunway.jpg"],
-  ["Christian Cowan","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68c61d36c7f5619f8ecd5117/master/w_1600%2Cc_limit/00012-christian-cowan-spring-2026-ready-to-wear-credit-gorunway.jpg"],
+  ["Christian Cowan","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68c61d33f43aa2f864220d01/master/w_1600%2Cc_limit/00010-christian-cowan-spring-2026-ready-to-wear-credit-gorunway.jpg"],
   ["Christian Dior","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68dd515d2747196f1e9f466b/master/w_1600%2Cc_limit/00068-christian-dior-spring-2026-ready-to-wear-credit-gorunway.jpg"],
   ["Christian Dior","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68dd515b3d863daf4581eac5/master/w_1600%2Cc_limit/00067-christian-dior-spring-2026-ready-to-wear-credit-gorunway.jpg"],
-  ["Christian Dior","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68dd515a22ed9601c39f5e0d/master/w_1600%2Cc_limit/00066-christian-dior-spring-2026-ready-to-wear-credit-gorunway.jpg"],
   ["Christian Siriano","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68c4acdaef8737415b9bf3b1/master/w_1600%2Cc_limit/00002-christian-siriano-spring-2026-ready-to-wear-credit-gorunway.jpg"],
-  ["Christian Siriano","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68c4acda956b8eb63f39730f/master/w_1600%2Cc_limit/00001-christian-siriano-spring-2026-ready-to-wear-credit-gorunway.jpg"],
+  ["Christian Siriano","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68c4acf2cb4733672a00ebb0/master/w_1600%2Cc_limit/00029-christian-siriano-spring-2026-ready-to-wear-credit-gorunway.jpg"],
   ["Christopher John Rogers","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68d6dbe0c790ea9dd8cd2076/master/w_1600%2Cc_limit/00029-christopher-john-rogers-spring-2026-ready-to-wear-credit-cesar-buitrago.jpg"],
   ["Christopher John Rogers","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68d6dbd8bec9b4e3e14543f3/master/w_1600%2Cc_limit/00024-christopher-john-rogers-spring-2026-ready-to-wear-credit-cesar-buitrago.jpg"],
   ["Claro Couture","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68cd6444a379e2ce22d8bd9e/master/w_1600%2Cc_limit/00039-claro-couture-spring-2026-ready-to-wear-spain-credit-brand.JPG"],
@@ -118,10 +110,8 @@ const fashionData = [
   ["HUI","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68d944a662c59a141c29f520/master/w_1600%2Cc_limit/00029-hui-spring-2026-ready-to-wear-credit-brand.jpg"],
   ["HUI","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68d944a36455f6338d05e502/master/w_1600%2Cc_limit/00027-hui-spring-2026-ready-to-wear-credit-brand.jpg"],
   ["Institution By Galib Gassanoff","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68d68bdc2a1de3b8166daf1d/master/w_1600%2Cc_limit/00018-institution-by-galib-gassanoff-spring-2026-ready-to-wear-credit-gorunway.jpg"],
-  ["Institution By Galib Gassanoff","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68d68bda36de622e97bb1cbb/master/w_1600%2Cc_limit/00016-institution-by-galib-gassanoff-spring-2026-ready-to-wear-credit-gorunway.jpg"],
   ["Isabel Marant","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68deff6bab7870442c402b1c/master/w_1600%2Cc_limit/00054-isabel-marant-spring-2026-ready-to-wear-credit-gorunway.JPG"],
   ["Isabel Marant","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68deff362508286c2e7e222c/master/w_1600%2Cc_limit/00051-isabel-marant-spring-2026-ready-to-wear-credit-gorunway.JPG"],
-  ["Isabel Marant","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68defc63190f37110fdcf791/master/w_1600%2Cc_limit/00012-isabel-marant-spring-2026-ready-to-wear-credit-gorunway.JPG"],
   ["Jane Wade","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68c802f3c617539f416e8e8a/master/w_1600%2Cc_limit/00033-jane-wade-spring-2026-ready-to-wear-credit-gorunway.jpg"],
   ["Jane Wade","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68c802f217e1c07ad89d8821/master/w_1600%2Cc_limit/00032-jane-wade-spring-2026-ready-to-wear-credit-gorunway.jpg"],
   ["Jil Sander","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68d4355c6774c5a85d5dc878/master/w_1600%2Cc_limit/00030-jil-sander-spring-2026-ready-to-wear-credit-gorunway.jpg"],
@@ -154,7 +144,6 @@ const fashionData = [
   ["Mithridate","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68cd3e5154ed7279c22f6ade/master/w_1600%2Cc_limit/00036-mithridate-spring-2026-ready-to-wear-credit-gorunway.jpg"],
   ["Mithridate","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68cd3e4c772b171d06ef1d1b/master/w_1600%2Cc_limit/00037-mithridate-spring-2026-ready-to-wear-credit-gorunway.jpg"],
   ["Monse","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68c763740d52bede4149f5b2/master/w_1600%2Cc_limit/00002-monse-spring-2026-ready-to-wear-credit-gorunway.jpg"],
-  ["Monse","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68c76373b72861a4889cc026/master/w_1600%2Cc_limit/00001-monse-spring-2026-ready-to-wear-credit-gorunway.jpg"],
   ["Moschino","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68d5a174db6ad27039eab552/master/w_1600%2Cc_limit/00019-moschino-spring-2026-ready-to-wear-credit-gorunway.jpg"],
   ["Moschino","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68d5a172db6ad27039eab550/master/w_1600%2Cc_limit/00018-moschino-spring-2026-ready-to-wear-credit-gorunway.jpg"],
   ["MSGM","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68d862ff0127718d47403db8/master/w_1600%2Cc_limit/_UMB0962.jpg"],
@@ -176,11 +165,9 @@ const fashionData = [
   ["Prada","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68d5553f9075a673cd0f5592/master/w_1600%2Cc_limit/00038-prada-spring-2026-ready-to-wear-credit-gorunway.jpg"],
   ["Rabanne","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68de8c567a06c23197a3365d/master/w_1600%2Cc_limit/00013-rabanne-spring-2026-ready-to-wear-credit-gorunway.jpg"],
   ["Rabanne","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68de8c4e96b183d5d17d9011/master/w_1600%2Cc_limit/00012-rabanne-spring-2026-ready-to-wear-credit-gorunway.jpg"],
-  ["Rahul Mishra AFEW","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68d4fddfd43b8e5cbbf0d92c/master/w_1600%2Cc_limit/00036-rahul-mishra-afew-spring-2026-ready-to-wear-credit-brand.jpg"],
   ["Roberto Cavalli","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68d63722a56f1f6129e84648/master/w_1600%2Cc_limit/00041-roberto-cavalli-spring-2026-ready-to-wear-credit-gorunway.JPG"],
   ["Roberto Cavalli","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68d6371f6d232558fc81e953/master/w_1600%2Cc_limit/00040-roberto-cavalli-spring-2026-ready-to-wear-credit-gorunway.JPG"],
   ["Rodarte","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68de16db71fc6c04f9b7d09a/master/w_1600%2Cc_limit/00038-rodarte-spring-2026-ready-to-wear-credit-brand.jpg"],
-  ["Rodarte","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68de16da72b0e28d3f20216a/master/w_1600%2Cc_limit/00037-rodarte-spring-2026-ready-to-wear-credit-brand.jpg"],
   ["Rory William Docherty","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68d13836a7acc3e40fa3dbf6/master/w_1600%2Cc_limit/00030-rory-william-docherty-spring-2026-ready-to-wear-credit-gorunway.jpg"],
   ["Rory William Docherty","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68d1383380a6d19a2f7e0d89/master/w_1600%2Cc_limit/00029-rory-william-docherty-spring-2026-ready-to-wear-credit-gorunway.jpg"],
   ["Saint Laurent","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68daef13caab05de5242ff0c/master/w_1600%2Cc_limit/_ALE0467.jpg"],
@@ -196,7 +183,6 @@ const fashionData = [
   ["Stella McCartney","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68dc441766c59c4084e4ffc1/master/w_1600%2Cc_limit/00035-stella-mccartney-spring-2026-ready-to-wear-credit-gorunway.jpg"],
   ["Stella McCartney","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68dc440d4c10b24fc443c64f/master/w_1600%2Cc_limit/00034-stella-mccartney-spring-2026-ready-to-wear-credit-gorunway.jpg"],
   ["Susan Fang","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68d155e680a6d19a2f7e0dd3/master/w_1600%2Cc_limit/00002-susan-fang-spring-2026-ready-to-wear-credit-gorunway.jpg"],
-  ["Susan Fang","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68d155e51d85a46cb051a5de/master/w_1600%2Cc_limit/00003-susan-fang-spring-2026-ready-to-wear-credit-gorunway.jpg"],
   ["Talia Byre","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68cfea036e24575ad78478d0/master/w_1600%2Cc_limit/00009-talia-byre-spring-2026-ready-to-wear-credit-gorunway.jpg"],
   ["Talia Byre","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68cfea03f9ef0e02e6364fc8/master/w_1600%2Cc_limit/00010-talia-byre-spring-2026-ready-to-wear-credit-gorunway.jpg"],
   ["Tanner Fletcher","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68c8834e408b5a6d510020bf/master/w_1600%2Cc_limit/00039-tanner-fletcher-spring-2026-ready-to-wear-credit-gorunway.jpg"],
@@ -204,7 +190,6 @@ const fashionData = [
   ["The Attico","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68d6fc89b55f2fe906a1c15f/master/w_1600%2Cc_limit/00054-the-attico-spring-2026-ready-to-wear-credit-gorunway.jpg"],
   ["The Attico","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68d6fc87228ff43a17c92cd2/master/w_1600%2Cc_limit/00053-the-attico-spring-2026-ready-to-wear-credit-gorunway.jpg"],
   ["Tibi","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68c5a14ccdfe1255e454ef42/master/w_1600%2Cc_limit/00002-tibi-spring-2026-ready-to-wear-credit-gorunway.jpg"],
-  ["Tibi","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68c5a14a566178fdcde604a2/master/w_1600%2Cc_limit/00003-tibi-spring-2026-ready-to-wear-credit-gorunway.jpg"],
   ["Tod's","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68d6a160438242018bda554f/master/w_1600%2Cc_limit/00001-tods-spring-2026-ready-to-wear-credit-gorunway.jpg"],
   ["Tolu Coker","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68d0340a025090ae63c55f95/master/w_1600%2Cc_limit/00012-tolu-coker-spring-2026-ready-to-wear-credit-rashidi-noah.jpg"],
   ["Tolu Coker","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68d034090ae225e45b46ca6b/master/w_1600%2Cc_limit/00011-tolu-coker-spring-2026-ready-to-wear-credit-rashidi-noah.jpg"],
@@ -222,4 +207,131 @@ const fashionData = [
   ["Uma Wang","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68de54c557eefa69c46b3cdc/master/w_1600%2Cc_limit/00033-uma-wang-spring-2026-ready-to-wear-credit-gorunway.jpg"],
   ["Versace","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68d74941228ff43a17c92ce8/master/w_1600%2Cc_limit/00048-versace-spring-2026-ready-to-wear-credit-brand.jpg"],
   ["Versace","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68d7494039e6905a024e663e/master/w_1600%2Cc_limit/00046-versace-spring-2026-ready-to-wear-credit-brand.jpg"],
-  ["Who Decides War","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68c6b4177cdeba9d55004a25/master/w_1600%2Cc_limit/00035-who-decides-war-2
+  ["Who Decides War","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68c6b4177cdeba9d55004a25/master/w_1600%2Cc_limit/00035-who-decides-war-2026-ready-to-wear-credit-gorunway.jpg"],
+  ["Who Decides War","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68c6b416a0b220e769763ee9/master/w_1600%2Cc_limit/00034-who-decides-war-2026-ready-to-wear-credit-gorunway.jpg"],
+  ["Zankov","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68c8537b0d52bede4149f681/master/w_1600%2Cc_limit/00033-zankov-spring-2026-ready-to-wear-credit-gorunway.jpg"],
+  ["Zomer","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68dbb647d6c4c7f8f558bfd0/master/w_1600%2Cc_limit/00014-zomer-spring-2026-ready-to-wear-credit-gorunway.jpg"],
+  ["Zomer","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68dbb64509991603ebea29e1/master/w_1600%2Cc_limit/00011-zomer-spring-2026-ready-to-wear-credit-gorunway.jpg"]
+];
+
+// ============================================================
+// GAME STATE
+// ============================================================
+let playerName = "";
+let score = 0;
+let currentQuestionIndex = 0;
+let gameQuestions = [];
+let answered = false;
+
+// Get all unique designer names for wrong answers
+const allDesigners = [...new Set(fashionData.map(item => item[0]))];
+
+// ============================================================
+// PAGE NAVIGATION
+// ============================================================
+function showPage(pageId) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(pageId).classList.add('active');
+}
+
+// ============================================================
+// SHUFFLE HELPER
+// ============================================================
+function shuffle(array) {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+// ============================================================
+// BUILD GAME QUESTIONS
+// ============================================================
+function buildQuestions() {
+  const shuffled = shuffle(fashionData);
+  gameQuestions = shuffled.map(item => {
+    const correct = item[0];
+    const image = item[2];
+    const season = item[1];
+
+    // Get 3 unique wrong answers
+    const wrongPool = allDesigners.filter(d => d !== correct);
+    const wrongs = shuffle(wrongPool).slice(0, 3);
+
+    // Combine and shuffle choices
+    const choices = shuffle([correct, ...wrongs]);
+
+    return { correct, image, season, choices };
+  });
+}
+
+// ============================================================
+// LOAD QUESTION
+// ============================================================
+function loadQuestion() {
+  if (currentQuestionIndex >= gameQuestions.length) {
+    showScorePage();
+    return;
+  }
+
+  answered = false;
+  const q = gameQuestions[currentQuestionIndex];
+
+  // Update counter
+  document.getElementById('question-counter').textContent =
+    `QUESTION ${currentQuestionIndex + 1} OF ${gameQuestions.length}`;
+
+  // Update image
+  const img = document.getElementById('runway-image');
+  img.src = q.image;
+  img.alt = `${q.correct} ${q.season}`;
+
+  // Update choices
+  const container = document.getElementById('choices-container');
+  container.innerHTML = '';
+  q.choices.forEach(choice => {
+    const btn = document.createElement('button');
+    btn.className = 'choice-btn';
+    btn.textContent = choice.toUpperCase();
+    btn.addEventListener('click', () => handleAnswer(choice, q.correct));
+    container.appendChild(btn);
+  });
+
+  // Hide feedback and next button
+  document.getElementById('feedback').classList.add('hidden');
+  document.getElementById('next-btn').classList.add('hidden');
+}
+
+// ============================================================
+// HANDLE ANSWER
+// ============================================================
+function handleAnswer(selected, correct) {
+  if (answered) return;
+  answered = true;
+
+  const buttons = document.querySelectorAll('.choice-btn');
+  const feedback = document.getElementById('feedback');
+
+  buttons.forEach(btn => {
+    btn.disabled = true;
+    const btnText = btn.textContent.toUpperCase();
+    const correctUpper = correct.toUpperCase();
+    if (btnText === correctUpper) {
+      btn.classList.add('correct');
+    } else if (btnText === selected.toUpperCase() && selected !== correct) {
+      btn.classList.add('incorrect');
+    }
+  });
+
+  if (selected === correct) {
+    score++;
+    document.getElementById('score-display').textContent = `SCORE: ${score}`;
+    feedback.textContent = 'CORRECT';
+  } else {
+    feedback.textContent = `INCORRECT — ${correct.toUpperCase()}`;
+  }
+
+  feedback.classList.remove('hidden');
+  document.getElementById('next-btn').classList.remove('

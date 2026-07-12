@@ -301,7 +301,7 @@ function loadQuestion() {
 
   // Hide feedback and next button
   document.getElementById('feedback').classList.add('hidden');
-  document.getElementById('next-btn').classList.add('hidden');
+  document.getElementById('btn-next').classList.add('hidden');
 }
 
 // ============================================================
@@ -329,9 +329,61 @@ function handleAnswer(selected, correct) {
     score++;
     document.getElementById('score-display').textContent = `SCORE: ${score}`;
     feedback.textContent = 'CORRECT';
+    feedback.className = 'feedback correct-feedback';
   } else {
     feedback.textContent = `INCORRECT — ${correct.toUpperCase()}`;
+    feedback.className = 'feedback incorrect-feedback';
   }
 
   feedback.classList.remove('hidden');
-  document.getElementById('next-btn').classList.remove('
+  document.getElementById('btn-next').classList.remove('hidden');
+}
+
+// ============================================================
+// SHOW SCORE PAGE
+// ============================================================
+function showScorePage() {
+  document.getElementById('final-message').textContent =
+    `${playerName}, YOU SCORED ${score} OUT OF ${gameQuestions.length}!`;
+  showPage('page-score');
+}
+
+// ============================================================
+// EVENT LISTENERS
+// ============================================================
+document.getElementById('btn-start').addEventListener('click', () => {
+  showPage('page-name');
+});
+
+document.getElementById('btn-go').addEventListener('click', () => {
+  const nameVal = document.getElementById('name-input').value.trim().toUpperCase();
+  if (!nameVal) {
+    alert('PLEASE ENTER YOUR NAME!');
+    return;
+  }
+  playerName = nameVal;
+  document.getElementById('player-name-display').textContent = playerName;
+  score = 0;
+  currentQuestionIndex = 0;
+  document.getElementById('score-display').textContent = 'SCORE: 0';
+  buildQuestions();
+  loadQuestion();
+  showPage('page-game');
+});
+
+document.getElementById('btn-next').addEventListener('click', () => {
+  currentQuestionIndex++;
+  loadQuestion();
+});
+
+document.getElementById('btn-done').addEventListener('click', () => {
+  showScorePage();
+});
+
+document.getElementById('btn-home').addEventListener('click', () => {
+  score = 0;
+  currentQuestionIndex = 0;
+  playerName = '';
+  document.getElementById('name-input').value = '';
+  showPage('page-home');
+});

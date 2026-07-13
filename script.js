@@ -214,245 +214,155 @@ const fashionData = [
   ["Zomer","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68dbb64509991603ebea29e1/master/w_1600%2Cc_limit/00011-zomer-spring-2026-ready-to-wear-credit-gorunway.jpg"]
 ];
 
-// =====================
+// ============================================================
 // GAME STATE
-// =====================
-
-let playerName = '';
+// ============================================================
+let playerName = "";
 let score = 0;
 let currentQuestionIndex = 0;
-let shuffledData = [];
-let gameMode = 'normal';
+let gameQuestions = [];
 let answered = false;
-let highScores = JSON.parse(localStorage.getItem('fashionHighScores')) || [];
 
-// =====================
-// UTILITY FUNCTIONS
-// =====================
+// Get all unique designer names for wrong answers
+const allDesigners = [...new Set(fashionData.map(item => item[0]))];
 
-function shuffleArray(array) {
-    const arr = [...array];
-    for (let i = arr.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [arr[i], arr[j]] = [arr[j], arr[i]];
-    }
-    return arr;
-}
-
-function getAllDesigners() {
-    return [...new Set(fashionData.map(item => item.designer))];
-}
-
-function getWrongChoices(correctDesigner) {
-    const allDesigners = getAllDesigners().filter(d => d !== correctDesigner);
-    const shuffled = shuffleArray(allDesigners);
-    return shuffled.slice(0, 3);
-}
-
+// ============================================================
+// PAGE NAVIGATION
+// ============================================================
 function showPage(pageId) {
-    document.querySelectorAll('.page').forEach(page => {
-        page.classList.remove('active');
-    });
-    document.getElementById(pageId).classList.add('active');
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(pageId).classList.add('active');
 }
 
-// =====================
-// HIGH SCORE FUNCTIONS
-// =====================
-
-function saveHighScore(name, points, mode) {
-    highScores.push({ name, points, mode });
-    highScores.sort((a, b) => b.points - a.points);
-    highScores = highScores.slice(0, 3);
-    localStorage.setItem('fashionHighScores', JSON.stringify(highScores));
+// ============================================================
+// SHUFFLE HELPER
+// ============================================================
+function shuffle(array) {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
 }
 
-function renderHighScores(listId) {
-    const list = document.getElementById(listId);
-    list.innerHTML = '';
-    if (highScores.length === 0) {
-        const li = document.createElement('li');
-        li.textContent = 'NO SCORES YET';
-        list.appendChild(li);
-        return;
-    }
-    highScores.forEach(entry => {
-        const li = document.createElement('li');
-        li.textContent = `${entry.name} - ${entry.points} PTS (${entry.mode})`;
-        list.appendChild(li);
-    });
+// ============================================================
+// BUILD GAME QUESTIONS
+// ============================================================
+function buildQuestions() {
+  const shuffled = shuffle(fashionData);
+  gameQuestions = shuffled.map(item => {
+    const correct = item[0];
+    const image = item[2];
+    const season = item[1];
+
+    // Get 3 unique wrong answers
+    const wrongPool = allDesigners.filter(d => d !== correct);
+    const wrongs = shuffle(wrongPool).slice(0, 3);
+
+    // Combine and shuffle choices
+    const choices = shuffle([correct, ...wrongs]);
+
+    return { correct, image, season, choices };
+  });
 }
 
-// =====================
-// GAME FUNCTIONS
-// =====================
-
-function startGame() {
-    score = 0;
-    currentQuestionIndex = 0;
-    answered = false;
-    shuffledData = shuffleArray(fashionData);
-
-    document.getElementById('display-name').textContent = playerName;
-    document.getElementById('display-score').textContent = 'SCORE: 0';
-    document.getElementById('display-mode').textContent =
-        gameMode === 'sudden-death' ? 'SUDDEN DEATH' : 'NORMAL MODE';
-
-    showPage('page-game');
-    loadQuestion();
-}
-
+// ============================================================
+// LOAD QUESTION
+// ============================================================
 function loadQuestion() {
-    answered = false;
+  if (currentQuestionIndex >= gameQuestions.length) {
+    showScorePage();
+    return;
+  }
 
-    const item = shuffledData[currentQuestionIndex];
+  answered = false;
+  const q = gameQuestions[currentQuestionIndex];
 
-    document.getElementById('progress').textContent =
-        `QUESTION ${currentQuestionIndex + 1} OF ${shuffledData.length}`;
+  // Update counter
+  document.getElementById('question-counter').textContent =
+    `QUESTION ${currentQuestionIndex + 1} OF ${gameQuestions.length}`;
 
-    const img = document.getElementById('runway-image');
-    img.src = item.image;
-    img.alt = 'RUNWAY IMAGE';
+  // Update image
+  const img = document.getElementById('runway-image');
+  img.src = q.image;
+  img.alt = `${q.correct} ${q.season}`;
 
-    document.getElementById('season-label').textContent = `SEASON: ${item.season}`;
-    document.getElementById('feedback').textContent = '';
-    document.getElementById('correct-answer-reveal').textContent = '';
-    document.getElementById('btn-next').style.display = 'none';
+  // Update choices
+  const container = document.getElementById('choices-container');
+  container.innerHTML = '';
+  q.choices.forEach(choice => {
+    const btn = document.createElement('button');
+    btn.className = 'choice-btn';
+    btn.textContent = choice.toUpperCase();
+    btn.addEventListener('click', () => handleAnswer(choice, q.correct));
+    container.appendChild(btn);
+  });
 
-    const wrongChoices = getWrongChoices(item.designer);
-    const allChoices = shuffleArray([item.designer, ...wrongChoices]);
-
-    const choicesDiv = document.getElementById('choices');
-    choicesDiv.innerHTML = '';
-
-    allChoices.forEach(choice => {
-        const btn = document.createElement('button');
-        btn.classList.add('choice-btn');
-        btn.textContent = choice;
-        btn.addEventListener('click', () => handleAnswer(choice, item.designer));
-        choicesDiv.appendChild(btn);
-    });
+  // Hide feedback and next button
+  document.getElementById('feedback').classList.add('hidden');
+  document.getElementById('btn-next').classList.add('hidden');
 }
 
-function handleAnswer(selected, correct) {
-    if (answered) return;
-    answered = true;
+// ============================================================
+    score++;
+    document.getElementById('score-display').textContent = `SCORE: ${score}`;
+    feedback.textContent = 'CORRECT';
+    feedback.className = 'feedback correct-feedback';
+  } else {
+    feedback.textContent = `INCORRECT — ${correct.toUpperCase()}`;
+    feedback.className = 'feedback incorrect-feedback';
+  }
 
-    const buttons = document.querySelectorAll('.choice-btn');
-    buttons.forEach(btn => {
-        btn.disabled = true;
-        if (btn.textContent === correct) {
-            btn.classList.add('correct');
-        }
-    });
-
-    if (selected === correct) {
-        score++;
-        document.getElementById('display-score').textContent = `SCORE: ${score}`;
-        document.getElementById('feedback').textContent = 'CORRECT';
-        document.getElementById('correct-answer-reveal').textContent = '';
-    } else {
-        document.querySelectorAll('.choice-btn').forEach(btn => {
-            if (btn.textContent === selected) {
-                btn.classList.add('incorrect');
-            }
-        });
-        document.getElementById('feedback').textContent = 'INCORRECT';
-        document.getElementById('correct-answer-reveal').textContent =
-            `THE ANSWER IS: ${correct}`;
-
-        if (gameMode === 'sudden-death') {
-            setTimeout(() => {
-                showScorePage(true);
-            }, 1500);
-            return;
-        }
-    }
-
-    if (currentQuestionIndex === shuffledData.length - 1) {
-        setTimeout(() => {
-            showScorePage(false);
-        }, 1500);
-    } else {
-        document.getElementById('btn-next').style.display = 'inline-block';
-    }
+  feedback.classList.remove('hidden');
+  document.getElementById('btn-next').classList.remove('hidden');
 }
 
-function showScorePage(diedInSuddenDeath) {
-    saveHighScore(playerName, score, gameMode === 'sudden-death' ? 'SUDDEN DEATH' : 'NORMAL MODE');
-
-    document.getElementById('score-title').textContent =
-        `WELL DONE, ${playerName}`;
-    document.getElementById('score-detail').textContent =
-        `YOU SCORED ${score} OUT OF ${shuffledData.length}`;
-
-    const modeText = gameMode === 'sudden-death' ? 'SUDDEN DEATH' : 'NORMAL MODE';
-    document.getElementById('score-mode').textContent = `MODE: ${modeText}`;
-
-    const suddenDeathMsg = document.getElementById('sudden-death-message');
-    if (gameMode === 'sudden-death' && diedInSuddenDeath) {
-        suddenDeathMsg.textContent =
-            `YOU DIED ON QUESTION ${currentQuestionIndex + 1}`;
-    } else if (gameMode === 'sudden-death' && !diedInSuddenDeath) {
-        suddenDeathMsg.textContent = 'FLAWLESS VICTORY';
-    } else {
-        suddenDeathMsg.textContent = '';
-    }
-
-    renderHighScores('high-score-list-score');
-    showPage('page-score');
+// ============================================================
+// SHOW SCORE PAGE
+// ============================================================
+function showScorePage() {
+  document.getElementById('final-message').textContent =
+    `${playerName}, YOU SCORED ${score} OUT OF ${gameQuestions.length}!`;
+  showPage('page-score');
 }
 
-// =====================
+// ============================================================
 // EVENT LISTENERS
-// =====================
-
-document.getElementById('btn-normal').addEventListener('click', () => {
-    gameMode = 'normal';
-    document.getElementById('btn-normal').classList.add('selected');
-    document.getElementById('btn-sudden-death').classList.remove('selected');
-});
-
-document.getElementById('btn-sudden-death').addEventListener('click', () => {
-    gameMode = 'sudden-death';
-    document.getElementById('btn-sudden-death').classList.add('selected');
-    document.getElementById('btn-normal').classList.remove('selected');
-});
-
+// ============================================================
 document.getElementById('btn-start').addEventListener('click', () => {
-    showPage('page-name');
+  showPage('page-name');
 });
 
-document.getElementById('btn-submit-name').addEventListener('click', () => {
-    const nameInput = document.getElementById('player-name').value.trim().toUpperCase();
-    if (nameInput === '') {
-        alert('PLEASE ENTER YOUR NAME');
-        return;
-    }
-    playerName = nameInput;
-    startGame();
+document.getElementById('btn-go').addEventListener('click', () => {
+  const nameVal = document.getElementById('name-input').value.trim().toUpperCase();
+  if (!nameVal) {
+    alert('PLEASE ENTER YOUR NAME!');
+    return;
+  }
+  playerName = nameVal;
+  document.getElementById('player-name-display').textContent = playerName;
+  score = 0;
+  currentQuestionIndex = 0;
+  document.getElementById('score-display').textContent = 'SCORE: 0';
+  buildQuestions();
+  loadQuestion();
+  showPage('page-game');
 });
 
 document.getElementById('btn-next').addEventListener('click', () => {
-    currentQuestionIndex++;
-    if (currentQuestionIndex < shuffledData.length) {
-        loadQuestion();
-    } else {
-        showScorePage(false);
-    }
+  currentQuestionIndex++;
+  loadQuestion();
 });
 
 document.getElementById('btn-done').addEventListener('click', () => {
-    showScorePage(false);
+  showScorePage();
 });
 
 document.getElementById('btn-home').addEventListener('click', () => {
-    renderHighScores('high-score-list');
-    showPage('page-home');
+  score = 0;
+  currentQuestionIndex = 0;
+  playerName = '';
+  document.getElementById('name-input').value = '';
+  showPage('page-home');
 });
-
-// =====================
-// INIT
-// =====================
-
-renderHighScores('high-score-list');

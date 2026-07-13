@@ -235,164 +235,99 @@ const fashionData = [
     ["Zomer","Spring 2026 Ready-to-Wear","https://assets.vogue.com/photos/68dbb64509991603ebea29e1/master/w_1600%2Cc_limit/00011-zomer-spring-2026-ready-to-wear-credit-gorunway.jpg"]
 ].map(([designer, season, image]) => ({ designer, season, image }));
 
-// ================================
+// ============================================================
 // GAME STATE VARIABLES
-// ================================
+// ============================================================
 let playerName = "";
 let score = 0;
-let currentQuestionIndex = 0;
-let questionsOrder = [];
-let answeredCurrent = false;
+let currentIndex = 0;
+let shuffledData = [];
+let answered = false;
+let highScores = JSON.parse(localStorage.getItem("fashionHighScores")) || [];
 
-// ================================
-// HIGH SCORES
-// ================================
-function getHighScores() {
-    const scores = localStorage.getItem("fashionHighScores");
-    return scores ? JSON.parse(scores) : [];
+// ============================================================
+// UTILITY FUNCTIONS
+// ============================================================
+
+// Shuffle array using Fisher-Yates algorithm
+function shuffleArray(arr) {
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
 }
 
-function saveHighScore(name, score, total) {
-    const scores = getHighScores();
-    scores.push({ name, score, total });
-    scores.sort((a, b) => b.score - a.score);
-    const topScores = scores.slice(0, 3);
-    localStorage.setItem("fashionHighScores", JSON.stringify(topScores));
+// Show a specific page, hide all others
+function showPage(pageId) {
+    document.querySelectorAll(".page").forEach(p => {
+        p.classList.remove("active");
+    });
+    document.getElementById(pageId).classList.add("active");
 }
 
+// Get all unique designer names from data
+function getAllDesigners() {
+    return [...new Set(fashionData.map(item => item.designer))];
+}
+
+// Generate 4 answer choices: 1 correct + 3 random wrong
+function generateChoices(correctDesigner) {
+    const allDesigners = getAllDesigners();
+    const wrongDesigners = allDesigners.filter(d => d !== correctDesigner);
+    const shuffledWrong = shuffleArray(wrongDesigners).slice(0, 3);
+    const allChoices = shuffleArray([correctDesigner, ...shuffledWrong]);
+    return allChoices;
+}
+
+// ============================================================
+// HIGH SCORE FUNCTIONS
+// ============================================================
+
+// Save score to localStorage, keep top 3
+function saveHighScore(name, points) {
+    highScores.push({ name: name, points: points });
+    highScores.sort((a, b) => b.points - a.points);
+    highScores = highScores.slice(0, 3);
+    localStorage.setItem("fashionHighScores", JSON.stringify(highScores));
+}
+
+// Display top 3 high scores on home page
 function displayHighScores() {
-    const scores = getHighScores();
     const list = document.getElementById("high-score-list");
     list.innerHTML = "";
 
-    if (scores.length === 0) {
-        list.innerHTML = "<li>NO SCORES YET</li>";
+    if (highScores.length === 0) {
+        const li = document.createElement("li");
+        li.textContent = "NO SCORES YET";
+        list.appendChild(li);
         return;
     }
 
-    scores.forEach((entry, index) => {
+    const ranks = ["1", "2", "3"];
+
+    highScores.forEach((entry, index) => {
         const li = document.createElement("li");
         li.innerHTML = `
-            <span class="rank">${index + 1}</span>
-            <span class="hs-name">${entry.name}</span>
-            <span class="hs-score">${entry.score}/${entry.total}</span>
+            <span class="rank">${ranks[index]}</span>
+            <span class="hs-name">${entry.name.toUpperCase()}</span>
+            <span class="hs-score">${entry.points} PTS</span>
         `;
         list.appendChild(li);
     });
 }
 
-// ================================
-// PAGE NAVIGATION
-// ================================
-function showPage(pageId) {
-    document.querySelectorAll(".page").forEach(page => {
-        page.classList.remove("active");
-    });
-    document.getElementById(pageId).classList.add("active");
-}
+// ============================================================
+// GAME FUNCTIONS
+// ============================================================
 
-// ================================
-// SHUFFLE HELPER
-// ================================
-function shuffleArray(array) {
-    const arr = [...array];
-    for (let i = arr.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [arr[i], arr[j]] = [arr[j], arr[i]];
-    }
-    return arr;
-}
-
-// ================================
-// GET WRONG CHOICES
-// ================================
-function getWrongChoices(correctDesigner) {
-    const allDesigners = [...new Set(fashionData.map(item => item.designer))];
-    const wrongDesigners = allDesigners.filter(d => d !== correctDesigner);
-    const shuffled = shuffleArray(wrongDesigners);
-    return shuffled.slice(0, 3);
-}
-
-// ================================
-// LOAD QUESTION
-// ================================
-function loadQuestion() {
-    answeredCurrent = false;
-
-    const currentData = fashionData[questionsOrder[currentQuestionIndex]];
-
-    document.getElementById("question-counter").textContent =
-        `QUESTION ${currentQuestionIndex + 1} OF ${questionsOrder.length}`;
-
-    document.getElementById("score-display").textContent = `SCORE: ${score}`;
-
-    document.getElementById("runway-image").src = currentData.image;
-
-    document.getElementById("feedback").textContent = "";
-
-    document.getElementById("btn-next").style.display = "none";
-
-    const wrongChoices = getWrongChoices(currentData.designer);
-    const allChoices = shuffleArray([currentData.designer, ...wrongChoices]);
-
-    const container = document.getElementById("choices-container");
-    container.innerHTML = "";
-
-    allChoices.forEach(choice => {
-        const btn = document.createElement("button");
-        btn.textContent = choice;
-        btn.classList.add("choice-btn");
-        btn.addEventListener("click", () => handleAnswer(choice, currentData.designer));
-        container.appendChild(btn);
-    });
-}
-
-// ================================
-// HANDLE ANSWER
-// ================================
-function handleAnswer(selected, correct) {
-    if (answeredCurrent) return;
-    answeredCurrent = true;
-
-    const buttons = document.querySelectorAll(".choice-btn");
-    const feedback = document.getElementById("feedback");
-
-    buttons.forEach(btn => {
-        btn.disabled = true;
-        if (btn.textContent === correct) {
-            btn.classList.add("correct");
-        }
-    });
-
-    if (selected === correct) {
-        score++;
-        feedback.textContent = "CORRECT";
-        document.getElementById("score-display").textContent = `SCORE: ${score}`;
-        buttons.forEach(btn => {
-            if (btn.textContent === selected) {
-                btn.classList.add("correct");
-            }
-        });
-    } else {
-        feedback.textContent = "INCORRECT";
-        buttons.forEach(btn => {
-            if (btn.textContent === selected) {
-                btn.classList.add("incorrect");
-            }
-        });
-    }
-
-    document.getElementById("btn-next").style.display = "inline-block";
-}
-
-// ================================
-// START GAME
-// ================================
+// Initialize and start a new game
 function startGame() {
     score = 0;
-    currentQuestionIndex = 0;
-    answeredCurrent = false;
-    questionsOrder = shuffleArray([...Array(fashionData.length).keys()]);
+    currentIndex = 0;
+    answered = false;
+    shuffledData = shuffleArray(fashionData);
 
     document.getElementById("player-name-display").textContent = playerName;
     document.getElementById("score-display").textContent = "SCORE: 0";
@@ -401,30 +336,185 @@ function startGame() {
     loadQuestion();
 }
 
-// ================================
-// END GAME
-// ================================
-function endGame() {
-    saveHighScore(playerName, score, questionsOrder.length);
+// Load the current question
+function loadQuestion() {
+    answered = false;
 
-    const finalDisplay = document.getElementById("final-score-display");
-    finalDisplay.innerHTML = `
-        <p>${playerName}</p>
-        <p>YOU SCORED ${score} OUT OF ${questionsOrder.length}</p>
+    const current = shuffledData[currentIndex];
+
+    // Update question counter
+    document.getElementById("question-counter").textContent =
+        `QUESTION ${currentIndex + 1} OF ${shuffledData.length}`;
+
+    // Update runway image
+    const img = document.getElementById("runway-image");
+    img.src = current.image;
+    img.alt = `${current.designer} ${current.season} RUNWAY LOOK`;
+
+    // Update question text with season info
+    document.getElementById("question-text").textContent =
+        `WHICH DESIGNER CREATED THIS ${current.season} LOOK?`;
+
+    // Clear previous feedback
+    const feedback = document.getElementById("feedback");
+    feedback.textContent = "";
+    feedback.className = "";
+
+    // Hide next button
+    document.getElementById("btn-next").style.display = "none";
+
+    // Generate choices and render buttons
+    const choices = generateChoices(current.designer);
+    const container = document.getElementById("choices-container");
+    container.innerHTML = "";
+
+    choices.forEach(choice => {
+        const btn = document.createElement("button");
+        btn.classList.add("choice-btn");
+        btn.textContent = choice;
+        btn.addEventListener("click", () => handleAnswer(choice, current.designer));
+        container.appendChild(btn);
+    });
+}
+
+// Handle when a user clicks an answer
+function handleAnswer(selected, correct) {
+    // Prevent answering twice
+    if (answered) return;
+    answered = true;
+
+    const feedback = document.getElementById("feedback");
+    const allChoiceBtns = document.querySelectorAll(".choice-btn");
+
+    // Disable all choice buttons after answering
+    allChoiceBtns.forEach(btn => {
+        btn.style.pointerEvents = "none";
+    });
+
+    if (selected === correct) {
+        // Correct answer
+        score++;
+        feedback.textContent = "CORRECT";
+        feedback.style.color = "#ff0000";
+        feedback.style.fontWeight = "bold";
+
+        // Highlight the correct button green
+        allChoiceBtns.forEach(btn => {
+            if (btn.textContent === correct) {
+                btn.classList.add("correct");
+            }
+        });
+
+    } else {
+        // Wrong answer
+        feedback.textContent = "INCORRECT";
+        feedback.style.color = "#ff0000";
+        feedback.style.fontWeight = "bold";
+
+        // Highlight selected button red, correct button green
+        allChoiceBtns.forEach(btn => {
+            if (btn.textContent === selected) {
+                btn.classList.add("incorrect");
+            }
+            if (btn.textContent === correct) {
+                btn.classList.add("correct");
+            }
+        });
+    }
+
+    // Update score display
+    document.getElementById("score-display").textContent = `SCORE: ${score}`;
+
+    // Show next button
+    document.getElementById("btn-next").style.display = "inline-block";
+}
+
+// End the game and show score page
+function endGame() {
+    saveHighScore(playerName, score);
+    displayHighScores();
+
+    const total = shuffledData.length;
+    const percentage = Math.round((score / total) * 100);
+
+    let message = "";
+    if (percentage === 100) {
+        message = "PERFECT SCORE!";
+    } else if (percentage >= 80) {
+        message = "EXCELLENT WORK!";
+    } else if (percentage >= 60) {
+        message = "GOOD JOB!";
+    } else if (percentage >= 40) {
+        message = "KEEP PRACTICING!";
+    } else {
+        message = "BETTER LUCK NEXT TIME!";
+    }
+
+    document.getElementById("final-score-display").innerHTML = `
+        <p class="final-name">${playerName}</p>
+        <p class="final-points">${score} OUT OF ${total}</p>
+        <p class="final-percent">${percentage}%</p>
+        <p class="final-message">${message}</p>
     `;
 
     showPage("page-score");
 }
 
-// ================================
+// ============================================================
 // EVENT LISTENERS
-// ================================
+// ============================================================
 
+// LET'S PLAY button → go to name input page
 document.getElementById("btn-start").addEventListener("click", () => {
+    displayHighScores();
     showPage("page-name");
 });
 
+// START GAME button → validate name and start
 document.getElementById("btn-submit-name").addEventListener("click", () => {
-    const input = document.getElementById("name-input").value.trim().toUpperCase();
+    const input = document.getElementById("name-input").value.trim();
     if (input === "") {
-        alert("
+        alert("PLEASE ENTER YOUR NAME TO CONTINUE");
+        return;
+    }
+    playerName = input.toUpperCase();
+    document.getElementById("name-input").value = "";
+    startGame();
+});
+
+// Allow pressing Enter key to submit name
+document.getElementById("name-input").addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+        document.getElementById("btn-submit-name").click();
+    }
+});
+
+// NEXT button → go to next question or end game
+document.getElementById("btn-next").addEventListener("click", () => {
+    currentIndex++;
+    if (currentIndex >= shuffledData.length) {
+        endGame();
+    } else {
+        loadQuestion();
+    }
+});
+
+// DONE button → confirm and end game early
+document.getElementById("btn-done").addEventListener("click", () => {
+    if (confirm("ARE YOU SURE YOU WANT TO END THE GAME EARLY?")) {
+        endGame();
+    }
+});
+
+// RETURN TO HOME button → go back to home page
+document.getElementById("btn-home").addEventListener("click", () => {
+    showPage("page-home");
+    displayHighScores();
+});
+
+// ============================================================
+// INITIALIZE
+// ============================================================
+
+// Display high scores when page first loads
+displayHighScores();

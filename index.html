@@ -9,63 +9,54 @@
 <body>
 
     <!-- HOME PAGE -->
-    <div id="page-home" class="page">
+    <div id="page-home" class="page active">
         <h1>FASHION TRIVIA</h1>
-
-        <div id="high-score-board">
-            <h2>🏆 TOP 3 HIGH SCORERS</h2>
-            <ol id="high-score-list">
-                <!-- Scores will appear here -->
-            </ol>
-        </div>
-
-        <div id="mode-select">
-            <h2>SELECT MODE</h2>
+        <button class="btn" id="btn-start">LET'S PLAY</button>
+        <div class="mode-buttons">
             <button class="btn mode-btn" id="btn-normal">NORMAL MODE</button>
-            <button class="btn mode-btn" id="btn-sudden-death">💀 SUDDEN DEATH</button>
+            <button class="btn mode-btn" id="btn-sudden-death">SUDDEN DEATH</button>
         </div>
-
-        <div id="name-input-area">
-            <input type="text" id="player-name" placeholder="ENTER YOUR NAME" maxlength="20"/>
-            <button class="btn" id="btn-start">LET'S PLAY</button>
+        <div id="high-score-board">
+            <h2>TOP 3 HIGH SCORERS</h2>
+            <ol id="high-score-list"></ol>
         </div>
     </div>
 
+    <!-- NAME INPUT PAGE -->
+    <div id="page-name" class="page">
+        <h2>ENTER YOUR NAME</h2>
+        <input type="text" id="player-name" placeholder="YOUR NAME" maxlength="20">
+        <button class="btn" id="btn-submit-name">START</button>
+    </div>
+
     <!-- GAME PAGE -->
-    <div id="page-game" class="page hidden">
+    <div id="page-game" class="page">
         <div id="game-header">
             <span id="display-name"></span>
-            <span id="display-mode"></span>
             <span id="display-score">SCORE: 0</span>
+            <span id="display-mode"></span>
             <button class="btn" id="btn-done">DONE</button>
         </div>
-
         <div id="question-area">
-            <p id="question-text">WHICH DESIGNER MADE THIS LOOK?</p>
-            <div id="image-container">
-                <img id="runway-image" src="" alt="RUNWAY LOOK"/>
-            </div>
-            <div id="season-text"></div>
-            <div id="choices-container"></div>
+            <div id="progress"></div>
+            <img id="runway-image" src="" alt="RUNWAY IMAGE">
+            <div id="season-label"></div>
+            <div id="choices"></div>
             <div id="feedback"></div>
-            <button class="btn hidden" id="btn-next">NEXT</button>
+            <div id="correct-answer-reveal"></div>
+            <button class="btn" id="btn-next" style="display:none;">NEXT</button>
         </div>
     </div>
 
     <!-- SCORE PAGE -->
-    <div id="page-score" class="page hidden">
-        <h1>GAME OVER</h1>
-        <div id="score-summary">
-            <p id="final-name"></p>
-            <p id="final-score"></p>
-            <p id="final-mode"></p>
-            <p id="sudden-death-message"></p>
-        </div>
-        <div id="end-high-score-board">
-            <h2>🏆 TOP 3 HIGH SCORERS</h2>
-            <ol id="end-high-score-list">
-                <!-- Scores will appear here -->
-            </ol>
+    <div id="page-score" class="page">
+        <h2 id="score-title"></h2>
+        <p id="score-detail"></p>
+        <p id="score-mode"></p>
+        <div id="sudden-death-message"></div>
+        <div id="high-score-board-score">
+            <h2>TOP 3 HIGH SCORERS</h2>
+            <ol id="high-score-list-score"></ol>
         </div>
         <button class="btn" id="btn-home">RETURN TO HOME</button>
     </div>

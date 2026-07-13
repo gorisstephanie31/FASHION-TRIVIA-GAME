@@ -11,54 +11,52 @@
     <!-- HOME PAGE -->
     <div id="page-home" class="page active">
         <h1>FASHION TRIVIA</h1>
-        <button class="btn" id="btn-start">LET'S PLAY</button>
-        <div class="mode-buttons">
-            <button class="btn mode-btn" id="btn-normal">NORMAL MODE</button>
-            <button class="btn mode-btn" id="btn-sudden-death">SUDDEN DEATH</button>
-        </div>
+        <p>TEST YOUR KNOWLEDGE OF RUNWAY LOOKS</p>
+        <button id="btn-start">LET'S PLAY</button>
+
         <div id="high-score-board">
-            <h2>TOP 3 HIGH SCORERS</h2>
-            <ol id="high-score-list"></ol>
+            <h2>HIGH SCORES</h2>
+            <ol id="high-score-list">
+            </ol>
         </div>
     </div>
 
     <!-- NAME INPUT PAGE -->
     <div id="page-name" class="page">
-        <h2>ENTER YOUR NAME</h2>
-        <input type="text" id="player-name" placeholder="YOUR NAME" maxlength="20">
-        <button class="btn" id="btn-submit-name">START</button>
+        <h1>ENTER YOUR NAME</h1>
+        <input type="text" id="name-input" placeholder="YOUR NAME" maxlength="20">
+        <button id="btn-submit-name">START GAME</button>
     </div>
 
     <!-- GAME PAGE -->
     <div id="page-game" class="page">
         <div id="game-header">
-            <span id="display-name"></span>
-            <span id="display-score">SCORE: 0</span>
-            <span id="display-mode"></span>
-            <button class="btn" id="btn-done">DONE</button>
+            <span id="player-name-display"></span>
+            <span id="score-display">SCORE: 0</span>
+            <button id="btn-done">DONE</button>
         </div>
-        <div id="question-area">
-            <div id="progress"></div>
-            <img id="runway-image" src="" alt="RUNWAY IMAGE">
-            <div id="season-label"></div>
-            <div id="choices"></div>
-            <div id="feedback"></div>
-            <div id="correct-answer-reveal"></div>
-            <button class="btn" id="btn-next" style="display:none;">NEXT</button>
+
+        <div id="question-counter"></div>
+
+        <div id="image-container">
+            <img id="runway-image" src="" alt="RUNWAY LOOK">
         </div>
+
+        <p id="question-text">WHICH DESIGNER CREATED THIS LOOK?</p>
+
+        <div id="choices-container">
+        </div>
+
+        <div id="feedback"></div>
+
+        <button id="btn-next" style="display:none;">NEXT</button>
     </div>
 
     <!-- SCORE PAGE -->
     <div id="page-score" class="page">
-        <h2 id="score-title"></h2>
-        <p id="score-detail"></p>
-        <p id="score-mode"></p>
-        <div id="sudden-death-message"></div>
-        <div id="high-score-board-score">
-            <h2>TOP 3 HIGH SCORERS</h2>
-            <ol id="high-score-list-score"></ol>
-        </div>
-        <button class="btn" id="btn-home">RETURN TO HOME</button>
+        <h1>GAME OVER</h1>
+        <div id="final-score-display"></div>
+        <button id="btn-home">RETURN TO HOME</button>
     </div>
 
     <script src="script.js"></script>

@@ -1,3 +1,220 @@
+// GAME STATE
+let currentQuestionIndex = 0;
+let score = 0;
+let playerName = '';
+let gameMode = ''; // 'normal' or 'sudden-death'
+let selectedMode = '';
+let questions = [];
+
+// HIGH SCORE FUNCTIONS
+function getHighScores() {
+    return JSON.parse(localStorage.getItem('fashionHighScores')) || [];
+}
+
+function saveHighScore(name, score, mode) {
+    let scores = getHighScores();
+    scores.push({ name, score, mode });
+    scores.sort((a, b) => b.score - a.score);
+    scores = scores.slice(0, 3); // Keep top 3
+    localStorage.setItem('fashionHighScores', JSON.stringify(scores));
+}
+
+function displayHighScores(listId) {
+    const scores = getHighScores();
+    const list = document.getElementById(listId);
+    list.innerHTML = '';
+
+    if (scores.length === 0) {
+        list.innerHTML = '<li>NO SCORES YET</li>';
+        return;
+    }
+
+    const medals = ['🥇', '🥈', '🥉'];
+    scores.forEach((entry, index) => {
+        const li = document.createElement('li');
+        li.textContent = `${medals[index]} ${entry.name} — ${entry.score} PTS (${entry.mode})`;
+        list.appendChild(li);
+    });
+}
+
+// SHUFFLE FUNCTION
+function shuffle(array) {
+    return array.sort(() => Math.random() - 0.5);
+}
+
+// GET ALL DESIGNER NAMES FOR WRONG ANSWERS
+const allDesigners = [...new Set(fashionData.map(item => item.designer))];
+
+// LOAD QUESTION
+function loadQuestion() {
+    if (currentQuestionIndex >= questions.length) {
+        showScorePage();
+        return;
+    }
+
+    const current = questions[currentQuestionIndex];
+
+    document.getElementById('runway-image').src = current.image;
+    document.getElementById('season-text').textContent = current.season;
+    document.getElementById('feedback').textContent = '';
+    document.getElementById('btn-next').classList.add('hidden');
+
+    // Generate wrong answers
+    const wrongAnswers = allDesigners
+        .filter(d => d !== current.designer)
+        .sort(() => Math.random() - 0.5)
+        .slice(0, 3);
+
+    const choices = shuffle([current.designer, ...wrongAnswers]);
+
+    const container = document.getElementById('choices-container');
+    container.innerHTML = '';
+
+    choices.forEach(choice => {
+        const btn = document.createElement('button');
+        btn.textContent = choice;
+        btn.classList.add('choice-btn');
+        btn.addEventListener('click', () => handleAnswer(choice, current.designer));
+        container.appendChild(btn);
+    });
+}
+
+// HANDLE ANSWER
+function handleAnswer(selected, correct) {
+    const buttons = document.querySelectorAll('.choice-btn');
+    buttons.forEach(btn => {
+        btn.disabled = true;
+        if (btn.textContent === correct) {
+            btn.classList.add('correct');
+        }
+    });
+
+    if (selected === correct) {
+        score++;
+        document.getElementById('display-score').textContent = `SCORE: ${score}`;
+        document.getElementById('feedback').textContent = '✅ CORRECT!';
+
+        if (gameMode === 'sudden-death') {
+            document.getElementById('btn-next').classList.remove('hidden');
+        } else {
+            document.getElementById('btn-next').classList.remove('hidden');
+        }
+
+    } else {
+        document.getElementById('feedback').textContent = '❌ INCORRECT!';
+
+        const wrongBtn = [...buttons].find(btn => btn.textContent === selected);
+        if (wrongBtn) wrongBtn.classList.add('incorrect');
+
+        if (gameMode === 'sudden-death') {
+            // SUDDEN DEATH — end game immediately
+            setTimeout(() => {
+                showScorePage();
+            }, 1500);
+        } else {
+            document.getElementById('btn-next').classList.remove('hidden');
+        }
+    }
+}
+
+// SHOW SCORE PAGE
+function showScorePage() {
+    document.getElementById('page-game').classList.add('hidden');
+    document.getElementById('page-score').classList.remove('hidden');
+    document.body.classList.remove('sudden-death');
+
+    const total = questions.length;
+    const modeText = gameMode === 'sudden-death' ? '💀 SUDDEN DEATH' : 'NORMAL MODE';
+
+    document.getElementById('final-name').textContent = `PLAYER: ${playerName}`;
+    document.getElementById('final-score').textContent = `SCORE: ${score} / ${total}`;
+    document.getElementById('final-mode').textContent = `MODE: ${modeText}`;
+
+    if (gameMode === 'sudden-death' && score < total) {
+        document.getElementById('sudden-death-message').textContent =
+            `💀 YOU DIED ON QUESTION ${currentQuestionIndex + 1}`;
+    } else if (gameMode === 'sudden-death' && score === total) {
+        document.getElementById('sudden-death-message').textContent =
+            `🏆 FLAWLESS VICTORY!`;
+    } else {
+        document.getElementById('sudden-death-message').textContent = '';
+    }
+
+    saveHighScore(playerName, score, modeText);
+    displayHighScores('end-high-score-list');
+}
+
+// EVENT LISTENERS
+document.getElementById('btn-normal').addEventListener('click', () => {
+    selectedMode = 'normal';
+    document.getElementById('btn-normal').classList.add('selected');
+    document.getElementById('btn-sudden-death').classList.remove('selected');
+});
+
+document.getElementById('btn-sudden-death').addEventListener('click', () => {
+    selectedMode = 'sudden-death';
+    document.getElementById('btn-sudden-death').classList.add('selected');
+    document.getElementById('btn-normal').classList.remove('selected');
+});
+
+document.getElementById('btn-start').addEventListener('click', () => {
+    const nameInput = document.getElementById('player-name').value.trim().toUpperCase();
+
+    if (!nameInput) {
+        alert('PLEASE ENTER YOUR NAME!');
+        return;
+    }
+
+    if (!selectedMode) {
+        alert('PLEASE SELECT A GAME MODE!');
+        return;
+    }
+
+    playerName = nameInput;
+    gameMode = selectedMode;
+    score = 0;
+    currentQuestionIndex = 0;
+    questions = shuffle([...fashionData]);
+
+    document.getElementById('display-name').textContent = playerName;
+    document.getElementById('display-score').textContent = 'SCORE: 0';
+    document.getElementById('display-mode').textContent =
+        gameMode === 'sudden-death' ? '💀 SUDDEN DEATH' : 'NORMAL MODE';
+
+    if (gameMode === 'sudden-death') {
+        document.body.classList.add('sudden-death');
+    }
+
+    document.getElementById('page-home').classList.add('hidden');
+    document.getElementById('page-score').classList.add('hidden');
+    document.getElementById('page-game').classList.remove('hidden');
+
+    loadQuestion();
+});
+
+document.getElementById('btn-next').addEventListener('click', () => {
+    currentQuestionIndex++;
+    loadQuestion();
+});
+
+document.getElementById('btn-done').addEventListener('click', () => {
+    showScorePage();
+});
+
+document.getElementById('btn-home').addEventListener('click', () => {
+    document.getElementById('page-score').classList.add('hidden');
+    document.getElementById('page-game').classList.add('hidden');
+    document.getElementById('page-home').classList.remove('hidden');
+    document.getElementById('player-name').value = '';
+    selectedMode = '';
+    document.getElementById('btn-normal').classList.remove('selected');
+    document.getElementById('btn-sudden-death').classList.remove('selected');
+    displayHighScores('high-score-list');
+});
+
+// Show high scores on load
+displayHighScores('high-score-list');
+
 // ============================================================
 // FASHION DATA — YOUR REAL VOGUE ARCHIVE DATA
 // ============================================================

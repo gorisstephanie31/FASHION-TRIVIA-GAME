@@ -244,3 +244,56 @@ button:hover {
     line-height: 2;
     margin-bottom: 30px;
 }
+
+/* NAME INPUT - submit button spacing */
+#btn-submit-name {
+    margin-top: 20px;
+}
+
+/* NEXT BUTTON */
+#btn-next {
+    margin-top: 10px;
+}
+
+/* HOME BUTTON on score page */
+#btn-home {
+    margin-top: 20px;
+}
+
+/* SCORE PAGE - final score text */
+#final-score-display p {
+    margin: 10px 0;
+    font-size: 1.3rem;
+    letter-spacing: 0.2em;
+}
+
+/* HIGH SCORE LIST - name takes up middle space */
+#high-score-list li .hs-name {
+    flex: 1;
+    text-align: left;
+    padding-left: 10px;
+}
+
+#high-score-list li .hs-score {
+    font-weight: bold;
+    color: #ff0000;
+}
+
+/* RESPONSIVE - smaller screens */
+@media (max-width: 480px) {
+    #page-home h1 {
+        font-size: 2rem;
+    }
+
+    #choices-container {
+        grid-template-columns: 1fr;
+    }
+
+    #runway-image {
+        height: 280px;
+    }
+
+    #image-container {
+        max-width: 100%;
+    }
+}

@@ -169,9 +169,11 @@ button:hover {
 
 #runway-image {
     width: 100%;
-    height: 400px;
-    object-fit: cover;
+    height: auto;
+    object-fit: contain;
+    border: 3px solid red;
     display: block;
+    max-height: 600px;
 }
 
 /* QUESTION */

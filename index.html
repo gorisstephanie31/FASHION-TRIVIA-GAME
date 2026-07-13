@@ -1,58 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>FASHION TRIVIA</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FASHION TRIVIA</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- PAGE 1: HOME -->
-  <div id="page-home" class="page active">
-    <div class="home-container">
-      <h1 class="title">FASHION TRIVIA</h1>
-      <button id="btn-start" class="btn-main">LET'S PLAY</button>
-    </div>
-  </div>
+    <!-- HOME PAGE -->
+    <div id="page-home" class="page">
+        <h1>FASHION TRIVIA</h1>
 
-  <!-- PAGE 2: NAME INPUT -->
-  <div id="page-name" class="page">
-    <div class="name-container">
-      <h2 class="prompt">ENTER YOUR NAME</h2>
-      <input type="text" id="name-input" class="name-input" placeholder="YOUR NAME" maxlength="20"/>
-      <button id="btn-go" class="btn-main">START GAME</button>
-    </div>
-  </div>
+        <div id="high-score-board">
+            <h2>🏆 TOP 3 HIGH SCORERS</h2>
+            <ol id="high-score-list">
+                <!-- Scores will appear here -->
+            </ol>
+        </div>
 
-  <!-- PAGE 3: GAME -->
-  <div id="page-game" class="page">
-    <div class="game-header">
-      <span id="player-name-display" class="player-name"></span>
-      <span id="score-display" class="score">SCORE: 0</span>
-      <button id="btn-done" class="btn-done">DONE</button>
-    </div>
-    <div class="game-body">
-      <div id="question-counter" class="question-counter">QUESTION 1 OF 10</div>
-      <div class="image-wrapper">
-        <img id="runway-image" src="" alt="Runway Look" class="runway-img"/>
-      </div>
-      <p class="question-text">WHICH DESIGNER IS THIS?</p>
-      <div id="choices-container" class="choices-container"></div>
-      <div id="feedback" class="feedback"></div>
-      <button id="btn-next" class="btn-next hidden">NEXT</button>
-    </div>
-  </div>
+        <div id="mode-select">
+            <h2>SELECT MODE</h2>
+            <button class="btn mode-btn" id="btn-normal">NORMAL MODE</button>
+            <button class="btn mode-btn" id="btn-sudden-death">💀 SUDDEN DEATH</button>
+        </div>
 
-  <!-- PAGE 4: SCORE SUMMARY -->
-  <div id="page-score" class="page">
-    <div class="score-container">
-      <h2 class="score-title">GAME OVER</h2>
-      <p id="final-message" class="final-message"></p>
-      <button id="btn-home" class="btn-main">RETURN TO HOME</button>
+        <div id="name-input-area">
+            <input type="text" id="player-name" placeholder="ENTER YOUR NAME" maxlength="20"/>
+            <button class="btn" id="btn-start">LET'S PLAY</button>
+        </div>
     </div>
-  </div>
 
-  <script src="script.js"></script>
+    <!-- GAME PAGE -->
+    <div id="page-game" class="page hidden">
+        <div id="game-header">
+            <span id="display-name"></span>
+            <span id="display-mode"></span>
+            <span id="display-score">SCORE: 0</span>
+            <button class="btn" id="btn-done">DONE</button>
+        </div>
+
+        <div id="question-area">
+            <p id="question-text">WHICH DESIGNER MADE THIS LOOK?</p>
+            <div id="image-container">
+                <img id="runway-image" src="" alt="RUNWAY LOOK"/>
+            </div>
+            <div id="season-text"></div>
+            <div id="choices-container"></div>
+            <div id="feedback"></div>
+            <button class="btn hidden" id="btn-next">NEXT</button>
+        </div>
+    </div>
+
+    <!-- SCORE PAGE -->
+    <div id="page-score" class="page hidden">
+        <h1>GAME OVER</h1>
+        <div id="score-summary">
+            <p id="final-name"></p>
+            <p id="final-score"></p>
+            <p id="final-mode"></p>
+            <p id="sudden-death-message"></p>
+        </div>
+        <div id="end-high-score-board">
+            <h2>🏆 TOP 3 HIGH SCORERS</h2>
+            <ol id="end-high-score-list">
+                <!-- Scores will appear here -->
+            </ol>
+        </div>
+        <button class="btn" id="btn-home">RETURN TO HOME</button>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
